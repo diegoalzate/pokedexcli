@@ -83,6 +83,12 @@ func GetOptions(config *cliOption.Config, args []string) map[string]cliOption.Op
 			Config:      config,
 			Callback:    func() error { return commands.Catch(config, args[0]) },
 		},
+		"inspect": {
+			Name:        "inspect",
+			Description: "inspect a specific pokemon",
+			Config:      config,
+			Callback:    func() error { return commands.Inspect(config, args[0]) },
+		},
 	}
 
 	options["help"] = cliOption.Option{

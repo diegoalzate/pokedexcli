@@ -82,3 +82,27 @@ func Catch(config *cliOption.Config, arg string) error {
 
 	return nil
 }
+
+func Inspect(config *cliOption.Config, arg string) error {
+	body, found := config.Pokedex[arg]
+
+	if !found {
+		fmt.Println("you have not caught that pokemon")
+		return nil
+	}
+
+	fmt.Printf("Name: %s \n", body.Name)
+	fmt.Printf("Height: %v \n", body.Height)
+	fmt.Printf("Weight: %v \n", body.Weight)
+	fmt.Println("Stats:")
+
+	for _, stat := range body.Stats {
+		fmt.Printf("  -%v: %v \n", stat.Stat.Name, stat.BaseStat)
+	}
+
+	fmt.Println("Types:")
+	for _, t := range body.Types {
+		fmt.Printf("  -%v \n", t.Type.Name)
+	}
+	return nil
+}
