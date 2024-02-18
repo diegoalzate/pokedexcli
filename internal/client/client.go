@@ -8,6 +8,7 @@ import (
 	"time"
 
 	pokecache "github.com/diegoalzate/pokedexcli/internal/pokeCache"
+	pokedex "github.com/diegoalzate/pokedexcli/internal/pokedex"
 )
 
 const baseUrl = "https://pokeapi.co/api/v2"
@@ -121,10 +122,6 @@ func (c *Client) GetLocationAreas(next *string) (*LocationAreasResponse, error) 
 
 	err = json.Unmarshal(body, &out)
 
-	if err != nil {
-		return &out, err
-	}
-
 	return &out, nil
 }
 
@@ -158,11 +155,29 @@ func (c *Client) GetLocationArea(name string) (*LocationAreaResponse, error) {
 
 	err = json.Unmarshal(body, &out)
 
+	return &out, nil
+}
+
+func (c *Client) GetPokemon(name string) (*pokedex.GetPokemonResponse, error) {
+	out := pokedex.GetPokemonResponse{}
+	url := baseUrl + "/pokemon" + "/" + name
+
+	resp, err := c.Http.Get(url)
+
 	if err != nil {
 		return &out, err
 	}
 
-	return &out, nil
+	body, err := io.ReadAll(resp.Body)
+	defer resp.Body.Close()
+
+	if err != nil {
+		return &out, err
+	}
+
+	err = json.Unmarshal(body, &out)
+
+	return &out, err
 }
 
 func (l *LocationAreasResponse) Print() {

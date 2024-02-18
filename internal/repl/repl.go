@@ -81,7 +81,7 @@ func GetOptions(config *cliOption.Config, args []string) map[string]cliOption.Op
 			Name:        "catch",
 			Description: "catch a specific pokemon",
 			Config:      config,
-			Callback:    func() error { return commands.Examine(config, args[0]) },
+			Callback:    func() error { return commands.Catch(config, args[0]) },
 		},
 	}
 

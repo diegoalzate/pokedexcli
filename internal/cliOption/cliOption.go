@@ -4,12 +4,14 @@ import (
 	"fmt"
 
 	"github.com/diegoalzate/pokedexcli/internal/client"
+	"github.com/diegoalzate/pokedexcli/internal/pokedex"
 )
 
 type Config struct {
 	Next     *string
 	Previous *string
-	Client   client.Client
+	Client   *client.Client
+	Pokedex  map[string]pokedex.GetPokemonResponse
 }
 
 type Option struct {

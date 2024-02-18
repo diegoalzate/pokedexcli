@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 
+	"math/rand"
+
 	"github.com/diegoalzate/pokedexcli/internal/cliOption"
 )
 
@@ -58,4 +60,25 @@ func Examine(config *cliOption.Config, arg string) error {
 	return nil
 }
 
-func Catch(arg string)
+func Catch(config *cliOption.Config, arg string) error {
+	body, err := config.Client.GetPokemon(arg)
+
+	chanceToCatch := rand.Intn(body.BaseExperience)
+
+	fmt.Printf("Throwing to catch %s...\n", body.Name)
+
+	if chanceToCatch > 40 {
+		fmt.Printf("%s escaped!\n", body.Name)
+		return nil
+	}
+
+	fmt.Printf("%s was caught!\n", body.Name)
+
+	config.Pokedex[body.Name] = *body
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
