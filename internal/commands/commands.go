@@ -106,3 +106,11 @@ func Inspect(config *cliOption.Config, arg string) error {
 	}
 	return nil
 }
+
+func Pokedex(config *cliOption.Config) error {
+	fmt.Println("Your Pokedex:")
+	for _, pokemon := range config.Pokedex {
+		fmt.Printf("- %v \n", pokemon.Name)
+	}
+	return nil
+}
